@@ -1,0 +1,29 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.coverage
+dist/
+
+# Secrets — never commit real keys
+.env
+
+# Data & indexes: large and regenerable (also keeps SQLite files out of OneDrive/git churn).
+# Exception: the golden eval set is hand-authored work and IS committed.
+data/*
+!data/golden/
+.chroma/
+
+# Eval run outputs / caches
+data/eval_runs/
+
+# Frontend
+node_modules/
+frontend/dist/
+
+# OS noise
+Thumbs.db
+.DS_Store
