@@ -1,0 +1,23 @@
+# Railway deployment config.
+#
+# Steps to deploy (manual, one-time — needs your Railway account):
+#   1. Ingest locally first: `uv run python scripts/ingest.py`
+#      (the Dockerfile bakes .chroma/ + BM25 pickles into the image).
+#   2. Push the repo to GitHub.
+#   3. railway.com -> New Project -> Deploy from GitHub repo -> pick this repo.
+#      Railway reads this file and builds the Dockerfile.
+#   4. In the Railway service -> Variables, set the Groq config:
+#        LLM_BASE_URL=https://api.groq.com/openai/v1
+#        LLM_API_KEY=<your gsk_... key>
+#        LLM_MODEL=llama-3.3-70b-versatile
+#        JUDGE_MODEL=llama-3.1-8b-instant
+#        RERANK_ENABLED=true        (drop to false if the container is RAM-tight)
+#   5. Settings -> Networking -> Generate Domain. That URL is the live demo.
+
+[build]
+builder = "dockerfile"
+
+[deploy]
+healthcheckPath = "/health"
+healthcheckTimeout = 300      # first boot loads two ML models — give it time
+restartPolicyType = "on_failure"

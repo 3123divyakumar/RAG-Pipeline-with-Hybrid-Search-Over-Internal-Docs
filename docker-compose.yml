@@ -1,0 +1,24 @@
+# One-command local stack:  docker compose up --build
+#
+# The API container talks to Ollama running on the HOST (where your models
+# and GPU/CPU already live) via host.docker.internal — running a 7B model
+# inside the container would double its size for nothing.
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      # Override the .env default: "localhost" inside a container is the
+      # container itself; host.docker.internal is the machine running Docker.
+      LLM_BASE_URL: http://host.docker.internal:11434/v1
+      LLM_API_KEY: ollama
+      LLM_MODEL: qwen2.5:7b
+      JUDGE_MODEL: qwen2.5:7b
+    extra_hosts:
+      - "host.docker.internal:host-gateway"   # Linux needs this mapping; Win/Mac have it built in
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
