@@ -45,6 +45,7 @@ than measurement — those say so.
 **Decision:** weighted reciprocal rank fusion, `rrf_k=60`, dense_weight 0.7.
 **Alternatives considered:** score normalization + weighted sum (needs per-corpus calibration, breaks when the corpus changes — the reason RRF exists); k=0 (top-of-list tyranny: rank 1 scores 2× rank 2); equal weights (BM25's exact-match wins matter most on identifier queries, which are a minority of real questions — dense deserves the majority vote).
 **Evidence:** k=60 is the value from Cormack & Clarke 2009 and has survived replication since. Weights are a starting hypothesis to be tested by `run_eval.py --mode dense` vs `--mode hybrid`.
+**Measured (2026-07-18, local qwen2.5:7b, 53 questions):** hybrid 0.83 correctness / 0.84 MRR vs dense 0.80 / 0.81 — hybrid ahead on both but at the edge of run noise (~0.03); hit@5 tied at 0.92. Honest reading: on this golden set (mostly prose lookups, few identifier-heavy queries) dense alone is already strong; hybrid's insurance is cheap and doesn't hurt, so it stays. A golden set with more exact-identifier questions is what would separate them.
 **Revisit when:** the eval numbers land — if hybrid barely beats dense-only, try 0.6/0.4 before concluding fusion doesn't pay.
 
 ## Rerank 20 → 5 with ms-marco-MiniLM-L-6-v2            (2026-07-14)

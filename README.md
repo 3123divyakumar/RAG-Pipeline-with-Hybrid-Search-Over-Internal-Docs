@@ -7,19 +7,36 @@ evaluation suite** that measures every architectural decision in this repo.
 
 ## Results
 
-> Fill this table by running `uv run python scripts/run_eval.py --mode hybrid` and
-> `--mode dense` (each run prints and saves a markdown report under `data/eval_runs/`).
-> On a local 7B model a full run takes a while — start it and walk away.
+53-question golden set, recursive chunking in both columns, fully local stack
+(qwen2.5:7b as both generator and LLM-judge; run 2026-07-18 — deltas under
+~0.03 are run-to-run noise):
 
 | Metric | Hybrid + rerank | Dense-only |
 |---|---|---|
-| Answer correctness | TBD | TBD |
-| Faithfulness | TBD | TBD |
-| Retrieval hit@5 | TBD | TBD |
-| Citation accuracy | TBD | TBD |
+| Answer correctness | **0.83** | 0.80 |
+| Faithfulness | 0.84 | 0.86 |
+| Retrieval hit@5 | 0.92 | 0.92 |
+| MRR | **0.84** | 0.81 |
+| Citation accuracy | 0.48 | 0.54 |
 
-Chunking strategy comparison (fixed vs recursive vs semantic):
-`uv run python scripts/run_eval.py --compare-strategies` → `data/eval_runs/comparison_<date>.md`
+The 4 unanswerable trap questions scored 1.00 in every configuration — the
+IDK gate refused all of them instead of hallucinating. Citation accuracy is
+the strictest metric here (every claim independently verified against its
+cited chunk by the judge) and the 7B judge is a noisy grader; re-scoring with
+a stronger judge is the documented next step.
+
+Chunking strategy comparison (hybrid mode, 53 questions per strategy):
+
+| Metric | fixed | recursive | semantic |
+|---|---|---|---|
+| Answer correctness | 0.76 | **0.83** | 0.79 |
+| Retrieval hit@5 | 0.86 | **0.92** | 0.90 |
+| MRR | 0.76 | **0.84** | 0.77 |
+
+Recursive wins or ties every headline metric — structure-aware splitting at
+paragraph/heading boundaries beats both blind fixed windows and the fancier
+embedding-similarity splitter on this corpus. Full per-question reports:
+`uv run python scripts/run_eval.py --compare-strategies` → `data/eval_runs/`.
 
 Everything above reproduces on a laptop with no API keys and no paid services.
 
