@@ -83,6 +83,13 @@ than measurement — those say so.
 **Evidence:** the corpus is fixed and small (~50MB indexed); an image that IS the demo is more reproducible than image + external state, and rebuilding the image is the natural "re-ingest" for a demo.
 **Revisit when:** the corpus grows or updates frequently — then a volume and background re-indexing job.
 
+## Groq judge = openai/gpt-oss-20b, not llama-3.1-8b    (2026-07-18, deploy)
+
+**Decision:** on Groq, `JUDGE_MODEL=openai/gpt-oss-20b`; the answerer stays `llama-3.3-70b-versatile`.
+**Alternatives considered:** `llama-3.1-8b-instant` (the original railway.toml value — turned out Groq rejects `response_format: json_schema` for all llama-3.x models with a 400, so every citation-verification and confidence call silently failed); rewriting `json_chat()` to fall back to `json_object` mode + prompt-side schema instructions (more code, weaker guarantee — schema-constrained decoding is exactly what keeps small-model judges parseable, per the llm.py docstring); `gpt-oss-120b` as judge (same structured-outputs support but slower and shares the answer-model's traffic profile; the judge sees one claim + one chunk at a time, so 20B is plenty).
+**Evidence:** first Groq eval attempt 2026-07-18 — 400 errors from console.groq.com/docs/structured-outputs on every judge call while llama-3.3-70b answers succeeded. Caught before deploy; the deployed demo would have shipped with broken verification.
+**Revisit when:** Groq adds json_schema support to more models, or the judge-agreement audit (see the judge-model entry) flags gpt-oss-20b.
+
 ## Indexes committed to git, not just the image         (2026-07-18, deploy)
 
 **Decision:** `.chroma/` (~81 MB) and `data/bm25_*.pkl` (~15 MB) are committed to the repo; `.gitignore` was carrying a bug that excluded them.
