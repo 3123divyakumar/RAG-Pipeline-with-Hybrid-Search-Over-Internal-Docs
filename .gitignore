@@ -11,11 +11,13 @@ dist/
 # Secrets — never commit real keys
 .env
 
-# Data & indexes: large and regenerable (also keeps SQLite files out of OneDrive/git churn).
-# Exception: the golden eval set is hand-authored work and IS committed.
+# Data: large and regenerable (also keeps churn out of OneDrive/git).
+# Exceptions: the golden eval set is hand-authored work, and the built indexes
+# (.chroma/ + BM25 pickles) ARE committed — Railway builds the Docker image
+# from the GitHub checkout, and the Dockerfile COPYs them into the image.
 data/*
 !data/golden/
-.chroma/
+!data/bm25_*.pkl
 
 # Eval run outputs / caches
 data/eval_runs/

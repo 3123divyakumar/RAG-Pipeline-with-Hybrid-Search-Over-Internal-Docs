@@ -82,5 +82,12 @@ than measurement — those say so.
 **Evidence:** the corpus is fixed and small (~50MB indexed); an image that IS the demo is more reproducible than image + external state, and rebuilding the image is the natural "re-ingest" for a demo.
 **Revisit when:** the corpus grows or updates frequently — then a volume and background re-indexing job.
 
+## Indexes committed to git, not just the image         (2026-07-18, deploy)
+
+**Decision:** `.chroma/` (~81 MB) and `data/bm25_*.pkl` (~15 MB) are committed to the repo; `.gitignore` was carrying a bug that excluded them.
+**Alternatives considered:** Railway CLI upload of the local working tree (extra tool + login, and "deploy = git push" stops being true); ingesting at image-build time on Railway (needs the 244-file corpus in git anyway, plus minutes of CPU embedding on every build); volume + seed-on-boot (already rejected in the Docker-image entry above).
+**Evidence:** Railway builds the Dockerfile from the GitHub checkout, and the Dockerfile does `COPY .chroma/ .chroma/` — with the indexes gitignored, the deploy build fails at that line. Largest file is chroma.sqlite3 at 65 MB, under GitHub's 100 MB per-file hard limit (it will print a >50 MB warning on push; that's expected).
+**Revisit when:** any index file approaches 100 MB — then Git LFS or object storage, and the Dockerfile fetches instead of COPYs.
+
 <!-- New entries go above this line. -->
 
