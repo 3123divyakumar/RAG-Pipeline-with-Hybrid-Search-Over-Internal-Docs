@@ -1,6 +1,6 @@
 # Railway deployment config.
 #
-# Steps to deploy (manual, one-time — needs your Railway account):
+# Steps to deploy (manual, one-time):
 #   1. Ingest locally first: `uv run python scripts/ingest.py`
 #      (the Dockerfile bakes .chroma/ + BM25 pickles into the image).
 #   2. Push the repo to GitHub.

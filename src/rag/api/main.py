@@ -169,8 +169,8 @@ def ingest_endpoint(files: list[UploadFile], strategy: str = "recursive") -> Ing
     """Upload documents and ADD them to the index (the CLI rebuilds; this appends).
 
     Mirrors scripts/ingest.py stage for stage: load -> chunk -> embed ->
-    dedup (within the upload) -> write both indexes. Kept synchronous: an
-    demo endpoint uploads a handful of files, not gigabytes.
+    dedup (within the upload) -> write both indexes. Kept synchronous: a
+    demo upload is a handful of files, not gigabytes.
     """
     if strategy not in STRATEGIES:
         raise HTTPException(status_code=422, detail=f"unknown strategy '{strategy}'")

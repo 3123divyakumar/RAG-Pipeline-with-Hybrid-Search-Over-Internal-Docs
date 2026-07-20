@@ -12,7 +12,7 @@ import numpy as np
 import pytest
 
 from rag.config import Settings
-from rag.ingest.chunkers import Chunk, chunk, chunk_fixed, chunk_recursive, chunk_semantic
+from rag.ingest.chunkers import chunk, chunk_fixed, chunk_recursive, chunk_semantic
 from rag.ingest.loaders import Document
 
 

@@ -5,7 +5,7 @@ Run it:  uv run python scripts/fetch_corpus.py
 What it fetches (all public, all free):
   - FastAPI docs   (markdown, from the fastapi/fastapi GitHub repo)
   - Pydantic docs  (markdown, from the pydantic/pydantic GitHub repo)
-  - One PDF  ("Attention Is All You Need" — so your PDF loader has real work)
+  - One PDF  ("Attention Is All You Need" — real work for the PDF loader)
   - One HTML page (PEP 8 — same, for the HTML loader)
 
 This corpus stands in for "a company's internal documentation": real technical

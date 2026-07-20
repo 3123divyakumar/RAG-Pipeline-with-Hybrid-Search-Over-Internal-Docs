@@ -66,8 +66,13 @@ class LLMClient:
         model: str | None = None,
     ) -> dict:
         """Structured output: the model is CONSTRAINED to emit JSON matching
-        `schema` via response_format (both Ollama and Groq support the
-        json_schema variant of the OpenAI spec).
+        `schema` via response_format.
+
+        Provider caveat: `json_schema` is NOT universally supported behind
+        "OpenAI-compatible" endpoints. Ollama accepts it on any model; Groq
+        only on its structured-outputs list (e.g. openai/gpt-oss-20b) and
+        returns 400 on the llama-3.x models. Judge models must be picked from
+        that list — see JUDGE_MODEL in railway.toml.
 
         Failure handling: parse with json.loads; on any failure retry ONCE
         with the error appended to the conversation (models usually fix their

@@ -1,9 +1,9 @@
 """Prompt construction — the contract between retrieval and the LLM.
 
 Prompts are code: they're versioned (SYSTEM_PROMPT_V1), every rule has a
-reason, and no prompt gets edited without re-running the eval suite (see
-makes that cheap). When V2 happens, keep V1 and add a changelog comment with
-the eval numbers that justified the change.
+reason, and no prompt gets edited without re-running the eval suite (the
+cached-run rescore path makes that cheap). When V2 happens, keep V1 and add a
+changelog comment with the eval numbers that justified the change.
 """
 
 from __future__ import annotations

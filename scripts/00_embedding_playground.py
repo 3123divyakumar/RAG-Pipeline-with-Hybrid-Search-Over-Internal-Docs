@@ -81,7 +81,7 @@ def main() -> None:
 
     # Console-safe ASCII only below (Windows terminals may not render em-dashes)
     console.print(
-        "\n[bold]What to notice (think before reading on):[/bold]\n"
+        "\n[bold]What to notice:[/bold]\n"
         "  1. s0/s1 score high with almost no shared words -- that's semantics, not keywords.\n"
         "  2. s6 (the cat) scores low against everything -- 'unrelated' is measurable.\n"
         "  3. Look at s4 vs s5: the identifier sentence and its plain-English meaning.\n"
@@ -91,8 +91,6 @@ def main() -> None:
         "     project has BM25 keyword search alongside embeddings.\n"
         "  4. Note the similarity floor: even unrelated pairs sit well above 0.\n"
         "     Absolute values mean little; RANKINGS are what retrieval uses.\n"
-        "\n[bold]Try:[/bold] add 2-3 of your own sentences to SENTENCES and predict the\n"
-        "scores before re-running. Being wrong here is the fastest way to build intuition."
     )
 
 

@@ -1,6 +1,4 @@
-"""Eval reports — turn suite results into the markdown tables the README quotes.
-
-"""
+"""Eval reports — turn suite results into the markdown tables the README quotes."""
 
 from __future__ import annotations
 
