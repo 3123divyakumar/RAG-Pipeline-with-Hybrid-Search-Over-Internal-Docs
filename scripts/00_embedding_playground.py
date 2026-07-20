@@ -13,7 +13,6 @@ of the angle between two vectors (1.0 = same direction, 0 = unrelated).
 Everything this pipeline does with "semantic search" reduces to:
 embed the query, embed the chunks, find the chunks whose vectors point
 in nearly the same direction as the query's.
-
 """
 
 import numpy as np

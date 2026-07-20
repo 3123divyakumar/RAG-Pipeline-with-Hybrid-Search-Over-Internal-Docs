@@ -38,7 +38,9 @@ paragraph/heading boundaries beats both blind fixed windows and the fancier
 embedding-similarity splitter on this corpus. Full per-question reports:
 `uv run python scripts/run_eval.py --compare-strategies` → `data/eval_runs/`.
 
-Everything above reproduces on a laptop with no API keys and no paid services.
+Everything above reproduces on a laptop with no API keys and no paid services —
+see [Quickstart](#quickstart), or `docker compose up --build` for the whole
+stack in one container.
 
 ## Why this isn't a LangChain quickstart
 
@@ -53,7 +55,8 @@ Everything above reproduces on a laptop with no API keys and no paid services.
 - **Decisions are measured.** Three chunking strategies indexed side by side and compared
   on the same golden set. See [DECISIONS.md](DECISIONS.md).
 - **Provider-agnostic by design.** Runs 100% free/local (Ollama + sentence-transformers);
-  the deployed instance swaps to a hosted 70B LLM (Groq free tier) with only env-var changes.
+  swapping to a hosted 70B LLM (Groq free tier) for deployment is an env-var change,
+  no code edits — verified against both providers.
 
 ## Architecture
 
@@ -87,7 +90,8 @@ Local, fully free (needs [uv](https://docs.astral.sh/uv/), [Ollama](https://olla
 with `qwen2.5:7b` pulled, and Node for the dashboard):
 
 ```bash
-git clone <repo> && cd rag-pipeline
+git clone https://github.com/3123divyakumar/RAG-Pipeline-with-Hybrid-Search-Over-Internal-Docs.git
+cd RAG-Pipeline-with-Hybrid-Search-Over-Internal-Docs
 cp .env.example .env                      # defaults already point at local Ollama
 uv sync
 uv run python scripts/fetch_corpus.py     # downloads the doc corpus (~244 files)
@@ -130,4 +134,5 @@ FastAPI · React + Vite · Docker · Railway
 | `src/rag/api/` | FastAPI service (serves the built React dashboard in prod) |
 | `frontend/` | React dashboard: citations, chunk inspector, confidence, mode toggle |
 | `data/golden/` | hand-written 53-question eval set (committed) |
+| `tests/` | 60 unit tests covering chunking, fusion, dedup, generation, evals, API |
 | `DECISIONS.md` | why every tunable has the value it has |

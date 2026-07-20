@@ -1,6 +1,7 @@
 """Scaffold sanity tests — proves the environment and package wiring work.
 
-Behavioural tests live alongside the code they cover.
+Behavioural tests live alongside the code they cover (test_chunkers.py,
+test_fusion.py, test_dedup.py, test_generate.py, test_evals.py, test_api.py).
 """
 
 from pathlib import Path

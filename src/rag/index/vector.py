@@ -40,7 +40,7 @@ class VectorIndex:
         self.strategy = strategy
         self.collection_name = f"chunks_{strategy}"
         # PersistentClient writes to .chroma/ on disk — survives restarts, and
-        # it's the directory the OneDrive exclusion protects sync exclusion protects.
+        # it's the directory the OneDrive sync exclusion protects.
         self._client = chromadb.PersistentClient(path=str(settings.chroma_dir))
         self._collection = self._client.get_or_create_collection(
             name=self.collection_name,

@@ -1,8 +1,9 @@
 # Decision Journal
 
-Every tunable and architectural choice in this repo gets an entry: what was decided,
-what the alternatives were, and what evidence picked the winner. Entries are written at decision time, so some rest on reasoning rather
-than measurement — those say so.
+Every tunable and architectural choice in this repo gets an entry: what was
+decided, what the alternatives were, what evidence picked the winner, and the
+condition that would reopen it. Entries are written at decision time, so some
+rest on reasoning rather than measurement — those say so.
 
 ---
 
